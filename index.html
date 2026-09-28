@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>라이프도슨트 | 지역 문화·행정 데이터 기업 (Life Docent)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F1E9; --paper-2:#EFE7DA; --card:#FFFCF6; --line:#E2D8C8; --line-2:#D6CAB6;
+  --ink:#1F2A24; --ink-2:#3B403A; --body:#4A4840; --muted:#5E5A52; --faint:#6B655B;
+  --forest:#1F3A33; --sea:#2F5D50; --mud:#8A6A4F; --clay:#B8733A; --clay-text:#9A5A2A; --gold:#E0A96D; --slate:#7C8FA8;
+  --on-dark:#F6F1E9; --on-dark-2:#D9D2C3;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;word-break:keep-all}
+a{color:var(--clay-text)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--clay);outline-offset:3px}
+h1,h2,h3{margin:0;font-family:var(--serif);letter-spacing:-0.02em}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+.eyebrow{font-size:14px;color:var(--clay-text);font-weight:500}
+.h2{font-size:38px;line-height:1.4;font-weight:700}
+.lead{font-size:17px;line-height:1.85;color:var(--body)}
+.band{background:var(--paper-2)}
+.sec{padding:120px 0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 30px;border-radius:999px;font-size:16px;font-weight:500;text-decoration:none;font-family:inherit;cursor:pointer;border:0}
+.btn-dark{background:var(--forest);color:var(--on-dark)}
+.btn-dark:hover{background:#16302a;color:var(--on-dark)}
+.btn-line{border:1px solid var(--ink);color:var(--ink);background:transparent}
+.btn-line:hover{background:var(--ink);color:var(--paper)}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:#d49a5b;color:var(--ink)}
+.btn-sm{height:44px;padding:0 18px;font-size:14px;font-weight:400}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:rgba(246,241,233,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{height:84px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--serif);font-size:24px;letter-spacing:-0.02em}
+.brand span{font-size:12px;letter-spacing:.18em;color:var(--faint)}
+.nav-links{display:flex;align-items:center;gap:36px;font-size:15px}
+.nav-links a{color:var(--ink-2);text-decoration:none}
+.nav-links a:hover{color:var(--clay-text)}
+.nav-links .btn{color:var(--on-dark)}
+.menu-btn{display:none;width:44px;height:44px;border:1px solid var(--line-2);border-radius:12px;background:transparent;cursor:pointer;align-items:center;justify-content:center}
+.mobile-menu{display:none;border-top:1px solid var(--line);padding:12px 24px 24px}
+.mobile-menu a{display:block;padding:12px 0;color:var(--ink-2);text-decoration:none;font-size:16px}
+.mobile-menu.open{display:block}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding-top:96px;padding-bottom:104px}
+.hero-text{display:flex;flex-direction:column;gap:28px}
+.hero h1{font-size:54px;line-height:1.28;font-weight:700;letter-spacing:-0.03em}
+.hero p{font-size:18px;line-height:1.8;color:var(--body);max-width:500px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;padding-top:8px}
+.swatch-wrap{position:relative;height:520px}
+.swatches{position:absolute;inset:0 0 40px 40px;border-radius:28px;overflow:hidden;display:flex;flex-direction:column}
+.swatches div{display:flex;align-items:flex-end;padding:18px 28px;font-size:13px}
+.quote-card{position:absolute;left:0;bottom:0;width:300px;background:var(--card);border-radius:20px;padding:24px 26px;box-shadow:0 18px 40px rgba(31,42,36,.14);display:flex;flex-direction:column;gap:10px}
+.quote-card small{font-size:12px;color:var(--faint)}
+.quote-card strong{font-family:var(--serif);font-size:18px;line-height:1.55;font-weight:600}
+
+/* strip */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(3,1fr)}
+.strip-item{padding:30px 0;display:flex;flex-direction:column;gap:6px}
+.strip-item + .strip-item{padding-left:40px;border-left:1px solid var(--line)}
+.strip-item b{font-family:var(--serif);font-size:20px;font-weight:600}
+.strip-item span{font-size:14px;color:var(--muted)}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.stack{display:flex;flex-direction:column;gap:24px}
+.compare{display:flex;flex-direction:column;gap:20px;padding-top:40px}
+.compare > div{padding:28px 30px;border-radius:20px;display:flex;flex-direction:column;gap:10px}
+.compare .old{border:1px solid var(--line)}
+.compare .new{background:var(--forest);color:var(--on-dark)}
+.compare small{font-size:13px;color:var(--faint)}
+.compare .new small{color:var(--gold)}
+.compare p{font-size:18px;font-weight:500;line-height:1.6}
+
+/* warehouse */
+.dw{display:flex;flex-direction:column;gap:56px}
+.dw-head{display:flex;flex-direction:column;gap:18px;max-width:760px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.dw-card{background:var(--card);border-radius:24px;padding:36px 32px;display:flex;flex-direction:column;gap:14px}
+.dw-card b{font-family:var(--serif);font-size:44px;line-height:1}
+.dw-card p{font-size:16px;line-height:1.75;color:var(--ink-2)}
+
+/* work */
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px}
+.head-row > p{font-size:16px;line-height:1.7;color:var(--muted);max-width:420px}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
+.pillar{border-top:2px solid var(--ink);padding-top:28px;display:flex;flex-direction:column;gap:16px}
+.pillar h3{font-size:24px;font-weight:600}
+.pillar p{font-size:16px;line-height:1.8;color:var(--body)}
+.pillar ul{margin:0;padding:0;list-style:none;font-size:14px;line-height:1.9;color:var(--muted)}
+
+/* demo */
+.demo-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:44px}
+.demo-head .stack{gap:16px;max-width:640px}
+.toggle{display:flex;gap:6px;padding:6px;background:var(--card);border-radius:999px;flex-shrink:0}
+.toggle button{height:44px;padding:0 20px;border:0;border-radius:999px;font-family:inherit;font-size:14px;cursor:pointer;background:transparent;color:var(--ink-2)}
+.toggle button[aria-pressed="true"]{background:var(--forest);color:var(--on-dark)}
+.demo-grid{display:grid;grid-template-columns:7fr 5fr;gap:24px}
+.panel{background:var(--card);border-radius:28px;padding:40px;display:flex;flex-direction:column;gap:28px}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.panel-head b{font-family:var(--serif);font-size:20px;font-weight:600}
+.panel-head span{font-size:13px;color:var(--faint)}
+.topics{display:flex;flex-direction:column;gap:22px}
+.topic{display:flex;flex-direction:column;gap:10px}
+.topic-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.topic-row > div:first-child{display:flex;flex-direction:column;gap:2px}
+.topic-row .label{font-size:16px;font-weight:500}
+.topic-row .sub{font-size:13px;color:var(--faint)}
+.topic-row .right{display:flex;align-items:center;gap:14px}
+.topic-row .pct{font-family:var(--serif);font-size:22px;font-weight:600;min-width:52px;text-align:right}
+.topic-row button{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--ink);background:transparent;color:var(--ink);font-family:inherit;font-size:14px;cursor:pointer}
+.topic-row button:hover{background:var(--ink);color:var(--paper)}
+.track{height:12px;background:var(--paper-2);border-radius:999px;overflow:hidden}
+.bar{height:100%;border-radius:999px;transition:width .4s ease}
+.side{display:flex;flex-direction:column;gap:24px}
+.insight{background:var(--forest);color:var(--on-dark);border-radius:28px;padding:36px;display:flex;flex-direction:column;gap:16px;flex-grow:1}
+.insight small{font-size:13px;color:var(--gold)}
+.insight p{font-family:var(--serif);font-size:20px;line-height:1.7;font-weight:500}
+.hours{background:var(--card);border-radius:28px;padding:32px 36px;display:flex;flex-direction:column;gap:18px}
+.hours > b{font-size:15px;font-weight:500}
+.hours > b span{font-size:13px;color:var(--faint);font-weight:400}
+.hour-bars{display:flex;align-items:flex-end;gap:18px;height:120px}
+.hour-bars div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;height:100%}
+.hour-bars i{display:block;width:100%;background:var(--gold);border-radius:8px}
+.hour-bars span{font-size:12px;color:var(--faint)}
+
+/* case */
+.case{background:var(--forest);color:var(--on-dark)}
+.case-grid{display:grid;grid-template-columns:5fr 1fr 6fr;gap:0}
+.case-text{display:flex;flex-direction:column;gap:24px}
+.case-text .eyebrow{color:var(--gold)}
+.case-text h2{font-size:40px;line-height:1.4;font-weight:700}
+.case-text p{font-size:17px;line-height:1.85;color:var(--on-dark-2)}
+.case-cards{grid-column:3;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.case-card{background:rgba(246,241,233,.07);border-radius:22px;padding:30px;display:flex;flex-direction:column;gap:12px}
+.case-card small{font-family:var(--serif);font-size:15px;color:var(--gold)}
+.case-card b{font-size:19px;font-weight:500}
+.case-card p{font-size:15px;line-height:1.75;color:var(--on-dark-2)}
+
+/* process */
+.center-head{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;margin-bottom:56px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin:0;padding:0;list-style:none}
+.steps li{display:flex;flex-direction:column;gap:14px}
+.step-top{display:flex;align-items:center;gap:12px}
+.step-top span{width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;flex-shrink:0}
+.step-top i{flex:1;height:1px;background:var(--line-2)}
+.steps b{font-family:var(--serif);font-size:21px;font-weight:600}
+.steps p{font-size:15px;line-height:1.75;color:var(--body)}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:4fr 1fr 7fr}
+.contact-text{display:flex;flex-direction:column;gap:20px}
+.contact-text h2{font-size:36px;line-height:1.4;font-weight:700}
+.contact-text p{font-size:16px;line-height:1.8;color:var(--body)}
+.form-card{grid-column:3;background:var(--card);border-radius:28px;padding:44px}
+.form{display:flex;flex-direction:column;gap:22px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label,.field .lbl{font-size:14px;font-weight:500}
+.field input,.field textarea{height:50px;padding:0 16px;border-radius:12px;border:1px solid var(--line-2);background:var(--paper);font-family:inherit;font-size:15px;color:var(--ink)}
+.field textarea{height:auto;padding:14px 16px;line-height:1.6;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--sea)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips label{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);font-size:14px;font-weight:400;cursor:pointer}
+.chips input{accent-color:var(--sea);width:16px;height:16px;margin:0}
+.done{display:none;flex-direction:column;gap:14px;padding:40px 0;align-items:flex-start}
+.done b{font-family:var(--serif);font-size:26px;font-weight:600}
+.done p{font-size:16px;line-height:1.8;color:var(--body)}
+.form-card.sent .form{display:none}
+.form-card.sent .done{display:flex}
+
+/* footer */
+footer{background:var(--ink);color:var(--on-dark-2)}
+footer .wrap{padding-top:56px;padding-bottom:56px;display:flex;justify-content:space-between;align-items:flex-start;gap:40px}
+footer .f-brand b{display:block;font-family:var(--serif);font-size:22px;color:var(--on-dark);margin-bottom:10px}
+footer .f-brand p{font-size:14px;line-height:1.8}
+footer .f-links{display:flex;flex-direction:column;gap:10px;align-items:flex-end;font-size:14px}
+footer .f-links nav{display:flex;gap:28px;flex-wrap:wrap}
+footer .f-links a{color:var(--on-dark-2);text-decoration:none}
+footer .f-links a:hover{color:var(--gold)}
+footer small{font-size:13px;color:#A39C8E}
+
+/* responsive */
+@media (max-width:960px){
+  .wrap{padding:0 24px}
+  .sec{padding:88px 0}
+  .nav-links{display:none}
+  .menu-btn{display:inline-flex}
+  .hero,.about,.demo-grid{grid-template-columns:1fr;gap:48px}
+  .hero{padding-top:64px;padding-bottom:72px}
+  .hero h1{font-size:40px}
+  .swatch-wrap{height:420px}
+  .strip .wrap{grid-template-columns:1fr}
+  .strip-item + .strip-item{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .compare{padding-top:0}
+  .three,.pillars{grid-template-columns:1fr;gap:24px}
+  .pillars{gap:40px}
+  .head-row,.demo-head{flex-direction:column;align-items:flex-start;gap:20px}
+  .case-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
+  .case-cards,.form-card{grid-column:auto}
+  .steps{grid-template-columns:1fr 1fr;gap:40px 24px}
+  .h2,.case-text h2,.contact-text h2{font-size:30px}
+  footer .wrap{flex-direction:column}
+  footer .f-links{align-items:flex-start}
+}
+@media (max-width:560px){
+  .hero h1{font-size:32px}
+  .hero p{font-size:16px}
+  .swatches{inset:0 0 60px 0}
+  .quote-card{width:auto;right:16px;left:16px}
+  .case-cards,.two,.steps{grid-template-columns:1fr}
+  .panel,.form-card{padding:28px 22px}
+  .topic-row .sub{display:none}
+  .btn{width:100%}
+  .hero-cta{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .bar{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><b>라이프도슨트</b><span>LIFE DOCENT</span></a>
+    <nav class="nav-links" aria-label="주 메뉴">
+      <a href="#about">회사 소개</a>
+      <a href="#work">하는 일</a>
+      <a href="#demo">데이터 미리보기</a>
+      <a href="#beolgyo">벌교 이야기</a>
+      <a href="#contact" class="btn btn-dark btn-sm">제안서 요청</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileMenu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="모바일 메뉴">
+    <a href="#about">회사 소개</a>
+    <a href="#work">하는 일</a>
+    <a href="#demo">데이터 미리보기</a>
+    <a href="#beolgyo">벌교 이야기</a>
+    <a href="#contact">제안서 요청</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="wrap hero">
+    <div class="hero-text">
+      <div class="eyebrow">지역 문화 기획 · 공간 · 데이터</div>
+      <h1>지역의 고유한 색을 기록하고, 그 기록으로 내일을 설계합니다.</h1>
+      <p>라이프도슨트는 공간과 미디어로 지역의 이야기를 전하고, 그곳을 찾은 사람들의 반응을 차곡차곡 모아 지자체의 관광·문화 정책을 위한 근거로 돌려드립니다.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-dark">함께할 사업 문의하기</a>
+        <a href="#contact" class="btn btn-line">기업 소개서 받기</a>
+      </div>
+    </div>
+    <div class="swatch-wrap" aria-hidden="true">
+      <div class="swatches">
+        <div style="flex-grow:3;background:#E0A96D;color:#3A2410;padding:22px 28px">노을빛 — 벌교의 대표 색</div>
+        <div style="flex-grow:2;background:#8A6A4F;color:#F6F1E9">갯벌</div>
+        <div style="flex-grow:2;background:#2F5D50;color:#F6F1E9">포구의 물빛</div>
+        <div style="flex-grow:1;background:#1F2A24;color:#D9D2C3;padding:16px 28px">근대 건축의 그림자</div>
+      </div>
+      <div class="quote-card">
+        <small>벌교 청년마을 거점센터에서</small>
+        <strong>한 곳의 색을 찾는 일은, 그곳 사람들의 이야기를 듣는 일에서 시작됩니다.</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRIP -->
+  <div class="strip">
+    <div class="wrap">
+      <div class="strip-item"><b>공간을 만들고</b><span>전시·미디어 공간 기획부터 시공까지</span></div>
+      <div class="strip-item"><b>반응을 모으고</b><span>AI 키오스크로 방문객의 관심을 기록</span></div>
+      <div class="strip-item"><b>정책으로 돌려드립니다</b><span>지자체가 바로 쓰는 관광·문화 리포트</span></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="sec">
+    <div class="wrap about">
+      <div class="stack">
+        <div class="eyebrow">우리가 일하는 방식</div>
+        <h2 class="h2">문을 연 뒤에도 계속 이야기가 쌓이는 공간을 만듭니다.</h2>
+        <p class="lead">지역마다 문화도, 역사도, 사는 사람도 다릅니다. 그래서 라이프도슨트는 똑같은 전시관을 찍어내지 않습니다. 기획·디자인·시공의 손끝 기술에 AI와 키오스크 기술을 더해, 공간이 그 자체로 지역의 목소리를 듣는 창구가 되도록 설계합니다.</p>
+      </div>
+      <div class="compare">
+        <div class="old"><small>흔히 보던 방식</small><p>한 번 짓고 나면 기록 없이 남겨지는 전시관, 해가 갈수록 어려워지는 유지·관리</p></div>
+        <div class="new"><small>라이프도슨트의 방식</small><p>공간을 지역 기록의 거점으로 삼아, 해마다 정책에 쓸 수 있는 데이터를 지자체에 꾸준히 전해드립니다</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA WAREHOUSE -->
+  <section class="band sec">
+    <div class="wrap dw">
+      <div class="dw-head">
+        <div class="eyebrow">담당자님을 위한 쉬운 설명</div>
+        <h2 class="h2">‘데이터 웨어하우스’는 마을의 기록 창고입니다.</h2>
+        <p class="lead">행사가 끝나면 사라지던 방문객의 이야기를 창고에 차곡차곡 쌓아 두었다가, 필요할 때 꺼내 쓰는 행정·관광 자산으로 바꾸는 기반입니다.</p>
+      </div>
+      <div class="three">
+        <div class="dw-card"><b style="color:#E0A96D">모으다</b><p>현장 키오스크와 미디어 전시에서 방문객이 무엇에 머물고 무엇을 궁금해했는지 기록합니다.</p></div>
+        <div class="dw-card"><b style="color:#B8733A">쌓다</b><p>흩어진 기록을 정리해 창고에 보관합니다. 한 해가 지나도, 담당자가 바뀌어도 기록은 남습니다.</p></div>
+        <div class="dw-card"><b style="color:#2F5D50">돌려드리다</b><p>관광 예산 편성, 문화재단 설립, 중앙부처 공모사업 응모 때 ‘감’이 아닌 근거 자료가 됩니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" class="sec">
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h2">라이프도슨트가 잘하는 세 가지</h2>
+        <p>기획하는 손, 기록하는 기술, 해석하는 눈이 한 팀 안에 있습니다.</p>
+      </div>
+      <div class="pillars">
+        <article class="pillar">
+          <div class="eyebrow">공간과 미디어</div>
+          <h3>지역의 이야기를 공간에 담습니다</h3>
+          <p>지역 고유의 이야기와 아름다움을 미디어아트, 전시, 복합 공간으로 풀어냅니다. 설계부터 시공까지 한 번에 맡깁니다.</p>
+          <ul><li>스토리텔링 미디어 전시</li><li>인터랙티브 설치 작품</li><li>설계·시공 통합 진행</li></ul>
+        </article>
+        <article class="pillar">
+          <div class="eyebrow">AI 키오스크</div>
+          <h3>방문객이 스스로 이야기를 남깁니다</h3>
+          <p>둘러보기만 하던 관람을, 궁금한 것을 묻고 마음에 든 것을 남기는 경험으로 바꿉니다. 그 흔적이 곧 지역의 기록이 됩니다.</p>
+          <ul><li>AI 지역 안내 키오스크</li><li>관심·반응 기록</li><li>누구나 쉬운 화면 설계</li></ul>
+        </article>
+        <article class="pillar">
+          <div class="eyebrow">지역 데이터</div>
+          <h3>기록을 정책의 언어로 옮깁니다</h3>
+          <p>모인 기록을 정리하고 해석해, 지자체가 실제로 읽고 활용할 수 있는 리포트로 전해드립니다.</p>
+          <ul><li>관광·문화 정책 리포트</li><li>문화·예술 재단 연계</li><li>지역과 오래 가는 파트너십</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo" class="band sec">
+    <div class="wrap">
+      <div class="demo-head">
+        <div class="stack">
+          <div class="eyebrow">데이터 미리보기</div>
+          <h2 class="h2">방문객의 관심이 정책 제안이 되기까지</h2>
+          <p class="lead" style="font-size:16px">아래 주제의 ‘+ 관심’을 눌러 보세요. 키오스크에 관심이 하나 남을 때마다 기록이 쌓이고, 제안이 달라집니다.</p>
+        </div>
+        <div class="toggle" role="group" aria-label="지역 선택">
+          <button type="button" data-region="beolgyo" aria-pressed="true">벌교(보성군)</button>
+          <button type="button" data-region="general" aria-pressed="false">표준 지자체 모델</button>
+        </div>
+      </div>
+      <div class="demo-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <b><span id="regionName">벌교</span> 방문객의 관심사</b>
+            <span>예시 데이터 · 누적 <span id="total">100</span>건</span>
+          </div>
+          <div class="topics" id="topics"></div>
+        </div>
+        <div class="side">
+          <div class="insight" aria-live="polite">
+            <small>이렇게 제안드려요</small>
+            <p id="insight"></p>
+          </div>
+          <div class="hours">
+            <b>시간대별 방문 흐름 <span>· 예시</span></b>
+            <div class="hour-bars" aria-hidden="true">
+              <div><i style="height:27%"></i><span>10시</span></div>
+              <div><i style="height:69%"></i><span>12시</span></div>
+              <div><i style="height:100%;background:#B8733A"></i><span>14시</span></div>
+              <div><i style="height:87%"></i><span>16시</span></div>
+              <div><i style="height:62%"></i><span>18시</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE -->
+  <section id="beolgyo" class="case sec">
+    <div class="wrap case-grid">
+      <div class="case-text">
+        <div class="eyebrow">함께한 이야기 · 전남 보성군 벌교읍</div>
+        <h2>벌교 청년마을, 그 고유한 색을 찾아서</h2>
+        <p>벌교 청년마을 사업에 선정되어, 벌교만의 문화적 색깔을 발굴하고 AI 디바이스와 스마트 키오스크를 설치했습니다. 현장에서 모인 방문객의 반응과 청년 거주 관심 기록을 정리해, 지자체의 행정·관광 정책에 쓰이는 자료로 전하고 있습니다.</p>
+        <div style="padding-top:8px"><a href="#contact" class="btn btn-gold">벌교 사례로 제안받기</a></div>
+      </div>
+      <div class="case-cards">
+        <div class="case-card"><small>하나</small><b>벌교다움을 발굴하다</b><p>갯벌, 문학의 흔적, 근대 건축을 미디어로 새롭게 보여줍니다.</p></div>
+        <div class="case-card"><small>둘</small><b>키오스크 거점을 세우다</b><p>거점 공간의 AI 디바이스가 방문객과 주민의 관심을 기록합니다.</p></div>
+        <div class="case-card"><small>셋</small><b>기록 창고를 짓다</b><p>관공서 행정 시스템과 연동할 수 있는 형태로 정리해 보관합니다.</p></div>
+        <div class="case-card"><small>넷</small><b>문화재단으로 잇다</b><p>기록을 바탕으로 오래 가는 지역 문화·예술·과학 재단을 준비합니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="center-head">
+        <div class="eyebrow">함께 일하는 순서</div>
+        <h2 class="h2">기획부터 정책 리포트까지, 한 팀이 끝까지</h2>
+      </div>
+      <ol class="steps">
+        <li><div class="step-top"><span style="background:#E0A96D;color:#1F2A24">1</span><i></i></div><b>지역을 알아가기</b><p>지역을 조사하고 고유한 색과 이야기를 찾아, 공간과 기록의 방향을 함께 정합니다.</p></li>
+        <li><div class="step-top"><span style="background:#B8733A;color:#FFFCF6">2</span><i></i></div><b>공간을 짓기</b><p>미디어 전시 공간을 설계·시공하고, AI 키오스크와 인터랙티브 장치를 설치합니다.</p></li>
+        <li><div class="step-top"><span style="background:#2F5D50;color:#FFFCF6">3</span><i></i></div><b>기록을 쌓기</b><p>방문객의 관심과 선호를 모아 안전한 클라우드 기록 창고에 쌓아 갑니다.</p></li>
+        <li><div class="step-top"><span style="background:#1F2A24;color:#F6F1E9">4</span></div><b>정책으로 잇기</b><p>관광·문화 정책 리포트를 전하고, 문화재단과 이어지는 지역 생태계를 함께 만듭니다.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="band sec">
+    <div class="wrap contact-grid">
+      <div class="contact-text">
+        <div class="eyebrow">지자체·기관 문의</div>
+        <h2>우리 지역의 이야기를 들려주세요</h2>
+        <p>지역 위치, 예산 규모, 추진 일정을 적어 주시면 더 빠르게 맞춤 제안서를 준비해 드립니다.</p>
+      </div>
+      <div class="form-card" id="formCard">
+        <form class="form" id="rfpForm">
+          <div class="two">
+            <div class="field"><label for="org">기관·기업명</label><input id="org" name="org" type="text" required placeholder="예: OO군청 문화관광과"></div>
+            <div class="field"><label for="name">담당자 성함·직함</label><input id="name" name="name" type="text" required placeholder="예: 홍길동 팀장"></div>
+            <div class="field"><label for="tel">연락처</label><input id="tel" name="tel" type="tel" required placeholder="010-0000-0000"></div>
+            <div class="field"><label for="mail">이메일</label><input id="mail" name="mail" type="email" required placeholder="contact@agency.go.kr"></div>
+          </div>
+          <fieldset class="field" style="border:0;padding:0;margin:0">
+            <legend class="lbl" style="padding:0;margin-bottom:10px">관심 분야</legend>
+            <div class="chips">
+              <label><input type="checkbox" name="interest" value="데이터 기록 창고" checked>데이터 기록 창고</label>
+              <label><input type="checkbox" name="interest" value="공간·미디어 기획·시공" checked>공간·미디어 기획·시공</label>
+              <label><input type="checkbox" name="interest" value="AI 키오스크">AI 키오스크</label>
+              <label><input type="checkbox" name="interest" value="문화재단 연계">문화재단 연계</label>
+            </div>
+          </fieldset>
+          <div class="field"><label for="msg">문의 내용</label><textarea id="msg" name="msg" rows="4" placeholder="지역 위치, 사업 예산 규모, 추진 일정 등을 자유롭게 적어 주세요."></textarea></div>
+          <div><button type="submit" class="btn btn-dark">맞춤 제안서 요청하기</button></div>
+        </form>
+        <div class="done" role="status">
+          <b>문의가 잘 접수되었습니다.</b>
+          <p>담당자가 검토한 뒤 24시간 안에 연락드리겠습니다.</p>
+          <button type="button" class="btn btn-line btn-sm" id="resetBtn">새 문의 작성</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-brand">
+      <b>라이프도슨트</b>
+      <p>(주)라이프도슨트 · 지역 문화·행정 데이터 기업<br>전라남도 보성군 벌교읍 청년마을 거점센터</p>
+    </div>
+    <div class="f-links">
+      <nav aria-label="하단 메뉴">
+        <a href="#about">회사 소개</a>
+        <a href="#work">하는 일</a>
+        <a href="#beolgyo">벌교 이야기</a>
+        <a href="#contact" style="color:#E0A96D">제안서 요청</a>
+      </nav>
+      <small>© 2026 LIFE DOCENT Co., Ltd.</small>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 모바일 메뉴
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+
+  // 데이터 미리보기 (예시 데이터)
+  const TOPICS = [
+    { id: 'culture', label: '문화·역사', sub: '갯벌, 문학의 흔적, 근대 건축', color: '#2F5D50' },
+    { id: 'food',    label: '로컬 먹거리', sub: '꼬막과 지역 특산물', color: '#B8733A' },
+    { id: 'youth',   label: '청년 거주', sub: '청년마을 주거·일자리', color: '#E0A96D' },
+    { id: 'tour',    label: '관광 코스', sub: '걷기 좋은 동선과 명소', color: '#7C8FA8' }
+  ];
+  const counts = {
+    beolgyo: { culture: 45, food: 30, youth: 15, tour: 10 },
+    general: { culture: 30, food: 25, youth: 20, tour: 25 }
+  };
+  const BASE = {
+    beolgyo: '벌교를 찾은 2030 방문객은 꼬막 문화와 청년 거주 프로그램을 엮은 전시에 특히 크게 반응했습니다. 관련 문화재단 기획과 지원 사업 확장을 제안드립니다.',
+    general: '지역의 관심 분야 비율을 바탕으로, 다음 해 관광·문화 예산의 우선순위를 제안해 드립니다.'
+  };
+  const BY_TOPIC = {
+    culture: '문화·역사 콘텐츠에 머무는 방문객이 늘고 있습니다. 지역 이야기를 담은 해설 프로그램과 문화재단 기획을 우선 검토해 보시길 제안드립니다.',
+    food: '로컬 먹거리(벌교 꼬막과 특산물)에 대한 관심이 높아지고 있습니다. 상권 활성화 정책 자료로 분류해 보관했습니다.',
+    youth: '청년 거주 정책을 찾아보는 방문객이 늘었습니다. 청년마을 주거·일자리 리포트에 바로 반영했습니다.',
+    tour: '관광 코스에 대한 관심이 커지고 있습니다. 방문객이 선호하는 동선을 바탕으로 코스 개선안을 준비할 수 있습니다.'
+  };
+  let region = 'beolgyo';
+  let last = null;
+
+  const topicsEl = document.getElementById('topics');
+  topicsEl.innerHTML = TOPICS.map(t => `
+    <div class="topic">
+      <div class="topic-row">
+        <div><span class="label">${t.label}</span><span class="sub">${t.sub}</span></div>
+        <div class="right">
+          <span class="pct" id="pct-${t.id}">0%</span>
+          <button type="button" data-topic="${t.id}" aria-label="${t.label} 관심 남기기">+ 관심</button>
+        </div>
+      </div>
+      <div class="track"><div class="bar" id="bar-${t.id}" style="background:${t.color};width:0"></div></div>
+    </div>`).join('');
+
+  function render() {
+    const c = counts[region];
+    const total = TOPICS.reduce((s, t) => s + c[t.id], 0);
+    TOPICS.forEach(t => {
+      const pct = Math.round(c[t.id] / total * 100);
+      document.getElementById('pct-' + t.id).textContent = pct + '%';
+      document.getElementById('bar-' + t.id).style.width = pct + '%';
+    });
+    document.getElementById('total').textContent = total;
+    document.getElementById('regionName').textContent = region === 'beolgyo' ? '벌교' : '표준 지자체';
+    document.getElementById('insight').textContent = last ? BY_TOPIC[last] : BASE[region];
+  }
+
+  topicsEl.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-topic]');
+    if (!btn) return;
+    last = btn.dataset.topic;
+    counts[region][last] += 5;
+    render();
+  });
+
+  document.querySelectorAll('.toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      region = btn.dataset.region;
+      last = null;
+      document.querySelectorAll('.toggle button').forEach(b => b.setAttribute('aria-pressed', b === btn));
+      render();
+    });
+  });
+
+  render();
+
+  // 문의 폼 (실제 전송은 연결 필요)
+  const formCard = document.getElementById('formCard');
+  document.getElementById('rfpForm').addEventListener('submit', e => {
+    e.preventDefault();
+    // TODO: 여기에서 이메일 전송 서비스나 서버로 폼 데이터를 보내도록 연결하세요.
+    formCard.classList.add('sent');
+    e.target.reset();
+  });
+  document.getElementById('resetBtn').addEventListener('click', () => formCard.classList.remove('sent'));
+</script>
+</body>
+</html>
